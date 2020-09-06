@@ -25,7 +25,13 @@ def test_push_forward(daily_interest, num_days):
     assert action.priority == (1 + daily_interest)**num_days
 
 
-def test_default_fns():
+@pytest.mark.parametrize('check_date', [
+    date(2020, 1, 2),
+    date(2020, 1, 3),
+    date(2020, 2, 1),
+    date(2021, 1, 1),
+])
+def test_default_fns(check_date):
     action = Action(
         name='name',
         due=date(2020, 1, 2),
@@ -37,9 +43,9 @@ def test_default_fns():
         with pytest.raises(RuntimeError):
             action.callback()
         assert not action.is_completed()
-    with freeze_time(date(2020, 1, 3)):
+    with freeze_time(check_date):
         assert action.is_ready()
         assert not action.is_completed()
-        for _ in range(5):
-            action.callback()
-            assert action.is_completed()
+        action.callback()
+        assert not action.is_ready()
+        assert action.is_completed()

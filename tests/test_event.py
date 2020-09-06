@@ -85,9 +85,10 @@ def test_default_fns():
     assert event.is_ready()
     assert not event.is_completed()
     event.callback()
+    assert not event.is_ready()
     assert event.is_completed()
 
-    assert not event.is_ready()
     with pytest.raises(RuntimeError):
         event.callback()
+    assert not event.is_ready()
     assert event.is_completed()

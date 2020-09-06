@@ -11,9 +11,9 @@ class Action(Event):
             due: date,
             priority: float,
             interest_rate: float,
-            callback: Optional[Callable] = None,
-            is_ready_fn: Optional[Callable] = None,
-            is_completed_fn: Optional[Callable] = None,
+            callback: Optional[Callable[[], None]] = None,
+            is_ready_fn: Optional[Callable[[], bool]] = None,
+            is_completed_fn: Optional[Callable[[], bool]] = None,
     ) -> None:
         super().__init__(
             name=name,
@@ -29,5 +29,5 @@ class Action(Event):
         self.due += timedelta(days=days)
         super().push_forward(days)
 
-    def _default_is_ready_fn(self):
-        return self.due < datetime.now().date()
+    def is_due(self) -> bool:
+        return datetime.now().date() >= self.due
