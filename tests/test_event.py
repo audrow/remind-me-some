@@ -27,7 +27,7 @@ def test_push_forward(interest, steps):
     -1,
     0
 ])
-def test_push_forward(steps):
+def test_invalid_push_forward(steps):
     priority = 1
     action = Event(
         name='name',

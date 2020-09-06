@@ -50,13 +50,3 @@ class Goal(Event):
     @property
     def last_completed(self):
         return self._last_completed
-
-
-if __name__ == '__main__':
-    g = Goal('name', timedelta(days=3))
-    a = g.make_action()
-    print(a.is_ready())
-    print(a.is_completed())
-    print(a.callback())
-    print(a.is_ready())
-    print(a.is_completed())

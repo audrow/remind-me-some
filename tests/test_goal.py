@@ -1,4 +1,4 @@
-from datetime import date, datetime, timedelta
+from datetime import date, timedelta
 from freezegun import freeze_time
 
 from remind_me_some import Goal
