@@ -1,5 +1,6 @@
 from datetime import datetime, date, timedelta
 from typing import Callable, Optional
+
 from remind_me_some.event import Event
 from remind_me_some.action import Action
 
@@ -16,7 +17,7 @@ class Goal(Event):
             callback: Optional[Callable] = None,
             is_ready_fn: Optional[Callable] = None,
             is_completed_fn: Optional[Callable] = None,
-    ):
+    ) -> None:
         super().__init__(
             name=name,
             priority=priority,
@@ -28,7 +29,7 @@ class Goal(Event):
         self._frequency = frequency
         self._last_completed = last_completed
 
-    def make_action(self):
+    def make_action(self) -> Action:
         if self._last_completed is not None:
             due = self._last_completed + self._frequency
         else:
@@ -48,5 +49,5 @@ class Goal(Event):
         self._last_completed = datetime.now().date()
 
     @property
-    def last_completed(self):
+    def last_completed(self) -> date:
         return self._last_completed

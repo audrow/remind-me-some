@@ -1,5 +1,6 @@
 from datetime import datetime, date, timedelta
 from typing import Callable, Optional
+
 from .event import Event
 
 
