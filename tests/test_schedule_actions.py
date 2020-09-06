@@ -7,9 +7,9 @@ from remind_me_some import Action, schedule_actions
 
 def test_schedule_one_action_per_day():
 
-    a1 = Action("action 1", date(2020, 1, 1), 0.1)
-    a2 = Action("action 2", date(2020, 1, 1), 1.5)
-    a3 = Action("action 2", date(2020, 1, 1), 2.0)
+    a1 = Action("action 1", date(2020, 1, 1), 0.1, 0.05)
+    a2 = Action("action 2", date(2020, 1, 1), 1.5, 0.05)
+    a3 = Action("action 2", date(2020, 1, 1), 2.0, 0.05)
     actions_ = [a1, a2, a3]
 
     schedule_actions(actions_, max_actions_per_day=1, is_today_or_after=False)
@@ -22,9 +22,9 @@ def test_schedule_one_action_per_day():
 
 def test_schedule_two_actions_per_day():
 
-    a1 = Action("action 1", date(2020, 1, 1), 0.1)
-    a2 = Action("action 2", date(2020, 1, 1), 1.5)
-    a3 = Action("action 2", date(2020, 1, 1), 2.0)
+    a1 = Action("action 1", date(2020, 1, 1), 0.1, 0.05)
+    a2 = Action("action 2", date(2020, 1, 1), 1.5, 0.05)
+    a3 = Action("action 2", date(2020, 1, 1), 2.0, 0.05)
     actions_ = [a1, a2, a3]
 
     schedule_actions(actions_, max_actions_per_day=2, is_today_or_after=False)
@@ -37,9 +37,9 @@ def test_schedule_two_actions_per_day():
 
 def test_schedule_today_or_after():
 
-    a1 = Action("action 1", date(2020, 1, 1), 0.1)
-    a2 = Action("action 2", date(2020, 1, 1), 1.5)
-    a3 = Action("action 2", date(2020, 1, 1), 2.0)
+    a1 = Action("action 1", date(2020, 1, 1), 0.1, 0.05)
+    a2 = Action("action 2", date(2020, 1, 1), 1.5, 0.05)
+    a3 = Action("action 2", date(2020, 1, 1), 2.0, 0.05)
     actions_ = [a1, a2, a3]
 
     with freeze_time(date(2020, 2, 1)):
@@ -58,9 +58,9 @@ def test_excluding_dates():
     def exclude_dates(date_: date):
         return date_ in [date(2020, 1, 1), date(2020, 1, 3)]
 
-    a1 = Action("action 1", date(2020, 1, 1), 0.1)
-    a2 = Action("action 2", date(2020, 1, 1), 1.5)
-    a3 = Action("action 2", date(2020, 1, 1), 2.0)
+    a1 = Action("action 1", date(2020, 1, 1), 0.1, 0.05)
+    a2 = Action("action 2", date(2020, 1, 1), 1.5, 0.05)
+    a3 = Action("action 2", date(2020, 1, 1), 2.0, 0.05)
     actions_ = [a1, a2, a3]
 
     schedule_actions(
