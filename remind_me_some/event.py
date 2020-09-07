@@ -1,4 +1,8 @@
+import logging
 from typing import Any, Callable, Optional
+
+
+logger = logging.getLogger(__name__)
 
 
 class Event:
@@ -30,9 +34,13 @@ class Event:
         self._callback_count: int = 0
 
     def __str__(self) -> str:
-        return f"(priority={self.priority:.2f})\t{self.name}"
+        return f"{self.name:<15} (priority={self.priority:.2f})"
+
+    def __eq__(self, other):
+        return self.name == other.name
 
     def push_forward(self, steps: int = 1) -> None:
+        logger.debug(f"Push forward '{self.name}' by {steps} steps")
         if steps < 1:
             raise ValueError('Must push forward a positive number of steps')
         self.priority *= (1 + self._interest_rate) ** steps
@@ -44,6 +52,7 @@ class Event:
         return self._callback_count > 0
 
     def callback(self) -> Any:
+        logger.debug(f"Call callback for '{self.name}'")
         if self.is_ready():
             self._callback_count += 1
             if callable(self._callback):

@@ -1,8 +1,12 @@
 from datetime import datetime, date, timedelta
+import logging
 from typing import Callable, Optional
 
 from remind_me_some.event import Event
 from remind_me_some.action import Action
+
+
+logger = logging.getLogger(__name__)
 
 
 class Goal(Event):
@@ -30,6 +34,7 @@ class Goal(Event):
         self._last_completed = last_completed
 
     def make_action(self) -> Action:
+        logger.debug(f"Make new action for goal '{self.name}'")
         if self._last_completed is not None:
             due = self._last_completed + self._frequency
         else:
@@ -46,6 +51,7 @@ class Goal(Event):
         )
 
     def mark_as_completed(self) -> None:
+        logger.debug(f"Update last completion of goal '{self.name}'")
         self._last_completed = datetime.now().date()
 
     @property
