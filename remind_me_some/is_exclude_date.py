@@ -1,5 +1,9 @@
 from datetime import date
 from holidays import UnitedStates as CountryHolidayCalendar
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def is_exclude_date(
@@ -9,6 +13,7 @@ def is_exclude_date(
         is_exclude_friday: bool = False,
 ) -> bool:
     def _is_holiday(_date: date):
+
         return _date in CountryHolidayCalendar()
 
     def _is_weekend(_date: date):
@@ -19,11 +24,14 @@ def is_exclude_date(
 
     if is_exclude_holidays:
         if _is_holiday(date_):
+            logger.debug(f"{date_} is a holiday")
             return True
     if is_exclude_weekends:
         if _is_weekend(date_):
+            logger.debug(f"{date_} is a weekend")
             return True
     if is_exclude_friday:
         if _is_friday(date_):
+            logger.debug(f"{date_} is a friday")
             return True
     return False

@@ -1,7 +1,7 @@
 from datetime import datetime, date, timedelta
 from typing import Callable, Optional
 
-from .event import Event
+from remind_me_some.event import Event
 
 
 class Action(Event):
@@ -25,6 +25,12 @@ class Action(Event):
             is_completed_fn=is_completed_fn,
         )
         self.due: date = due
+
+    def __str__(self):
+        return (
+            f"{super().__str__()}  =>  "
+            f"{self.due} ({'READY' if self.is_ready() else 'NOT READY'})"
+        )
 
     def push_forward(self, days: int = 1) -> None:
         self.due += timedelta(days=days)
