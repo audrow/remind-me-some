@@ -27,5 +27,6 @@ jobs:
     - name: Check coding style matches pep8
       run:  flake8 remind_me_some/ tests/
     - name: Run tests
-      run: |
-        pytest
+      run: pytest --cov=remind_me_some --cov-report=xml
+    - name: Upload test coverage report
+      run: bash <(curl -s https://codecov.io/bash) -t ${{ secrets.CODECOV_TOKEN }}
