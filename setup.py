@@ -37,6 +37,7 @@ setup(
         'freezegun',      # spoof datetime for testing
         'holidays',       # get the current holidays
         'pytest',         # a testing framework
+        'pytest-cov',     # for code coverage
         'pytest-mock',    # mocks for pytest
     ],
     classifiers=[
