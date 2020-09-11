@@ -92,3 +92,19 @@ def test_default_fns():
         event.callback()
     assert not event.is_ready()
     assert event.is_completed()
+
+
+def test_try_run():
+    event = Event(
+        name='name',
+        priority=1.0,
+        interest_rate=1.0,
+    )
+    no_arg_fn = lambda: None
+    one_arg_fn = lambda x: None
+    two_arg_fn = lambda x, y: None
+
+    event._try_run_args(no_arg_fn)
+    event._try_run_args(one_arg_fn)
+    with pytest.raises(TypeError):
+        event._try_run_args(two_arg_fn)
