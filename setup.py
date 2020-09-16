@@ -36,6 +36,7 @@ setup(
         'flake8',         # check code style for pep-8
         'freezegun',      # spoof datetime for testing
         'holidays',       # get the current holidays
+        'pep257',         # test the doc strings
         'pytest',         # a testing framework
         'pytest-cov',     # for code coverage
         'pytest-mock',    # mocks for pytest
