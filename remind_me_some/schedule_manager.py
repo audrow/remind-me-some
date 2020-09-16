@@ -20,16 +20,27 @@ class ScheduleManager:
             self,
             max_actions_per_day: int = 1,
             is_exclude_date_fn: Callable[[date], bool] = is_exclude_date,
-    ):
-        """Initialize a schedule manager."""
+    ) -> None:
+        """Initialize the schedule manager.
+
+        :param max_actions_per_day:
+            The max number of actions that should occur on any day.
+        :param is_exclude_date_fn:
+            A function that return True if a date should be excluded
+            and false otherwise. This can be used to avoid scheduling
+            actions on weekends, holidays, etc.
+        """
         self._max_actions_per_day = max_actions_per_day
         self._is_exclude_date_fn = is_exclude_date_fn
 
         self._goals: List[Goal] = []
         self._actions: List[Action] = []
 
-    def __str__(self):
-        """Get a string for data contained in the schedule manager."""
+    def __str__(self) -> str:
+        """Get a string for data contained in the schedule manager.
+
+        :return: A string with information on the instance.
+        """
         out = ""
         if self._actions:
             contents = self._actions
@@ -45,26 +56,38 @@ class ScheduleManager:
 
     @property
     def actions(self) -> List[Action]:
-        """Get the active actions."""
+        """Get the active actions.
+
+        :return: A list of active actions.
+        """
         return self._actions
 
     @property
     def goals(self) -> List[Goal]:
-        """Get the current goals."""
+        """Get the current goals.
+
+        :return: A list of current goals.
+        """
         return self._goals
 
-    def add_goal(self, goal: Goal):
-        """Add one new goal."""
+    def add_goal(self, goal: Goal) -> None:
+        """Add one new goal.
+
+        :param goal: A goal to add.
+        """
         logger.debug(f"Goal '{goal.name}' added")
         if goal not in self._goals:
             self._goals.append(goal)
 
-    def add_goals(self, *goals: Goal):
-        """Add one or more new goals."""
+    def add_goals(self, *goals: Goal) -> None:
+        """Add one or more new goals.
+
+        :param goals: One or more goals.
+        """
         for g in goals:
             self.add_goal(g)
 
-    def run(self):
+    def run(self) -> None:
         """Execute or complete ready actions."""
         for action in self._actions:
             if action.is_ready():
@@ -84,7 +107,7 @@ class ScheduleManager:
                 return g
         raise ValueError(f"No goal '{name}' found")
 
-    def update_schedule(self):
+    def update_schedule(self) -> None:
         """Update the schedule to balance actions."""
         self._update_actions()
         schedule_actions(
