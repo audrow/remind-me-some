@@ -1,3 +1,5 @@
+"""The schedule manager class."""
+
 from datetime import date
 import logging
 from typing import Callable, List
@@ -12,12 +14,14 @@ logger = logging.getLogger(__name__)
 
 
 class ScheduleManager:
+    """The schedule manager class."""
 
     def __init__(
             self,
             max_actions_per_day: int = 1,
             is_exclude_date_fn: Callable[[date], bool] = is_exclude_date,
     ):
+        """Initialize a schedule manager."""
         self._max_actions_per_day = max_actions_per_day
         self._is_exclude_date_fn = is_exclude_date_fn
 
@@ -25,6 +29,7 @@ class ScheduleManager:
         self._actions: List[Action] = []
 
     def __str__(self):
+        """Get a string for data contained in the schedule manager."""
         out = ""
         if self._actions:
             contents = self._actions
@@ -40,33 +45,38 @@ class ScheduleManager:
 
     @property
     def actions(self) -> List[Action]:
+        """Get the active actions."""
         return self._actions
 
     @property
     def goals(self) -> List[Goal]:
+        """Get the current goals."""
         return self._goals
 
     def add_goal(self, goal: Goal):
+        """Add one new goal."""
         logger.debug(f"Goal '{goal.name}' added")
         if goal not in self._goals:
             self._goals.append(goal)
 
     def add_goals(self, *goals: Goal):
+        """Add one or more new goals."""
         for g in goals:
             self.add_goal(g)
 
     def run(self):
-        action = self._actions[0]
-        if action.is_ready():
-            logger.debug(f"Action '{action.name}' is ready")
-            logger.info(f"Run callback for action '{action.name}'")
-            action.callback()
-        elif action.is_completed():
-            logger.debug(f"Action '{action.name}' is completed")
-            goal = self._get_goal(action.name)
-            goal.mark_as_completed()
-            logger.info(f"Remove action completed '{action.name}'")
-            self._actions.remove(action)
+        """Execute or complete ready actions."""
+        for action in self._actions:
+            if action.is_ready():
+                logger.debug(f"Action '{action.name}' is ready")
+                logger.info(f"Run callback for action '{action.name}'")
+                action.callback()
+            elif action.is_completed():
+                logger.debug(f"Action '{action.name}' is completed")
+                goal = self._get_goal(action.name)
+                goal.mark_as_completed()
+                logger.info(f"Remove action completed '{action.name}'")
+                self._actions.remove(action)
 
     def _get_goal(self, name: str) -> Goal:
         for g in self._goals:
@@ -75,6 +85,7 @@ class ScheduleManager:
         raise ValueError(f"No goal '{name}' found")
 
     def update_schedule(self):
+        """Update the schedule to balance actions."""
         self._update_actions()
         schedule_actions(
             self._actions,

@@ -1,3 +1,5 @@
+"""Check if a date should be excluded."""
+
 from datetime import date
 from holidays import UnitedStates as CountryHolidayCalendar
 import logging
@@ -12,6 +14,7 @@ def is_exclude_date(
         is_exclude_weekends: bool = True,
         is_exclude_friday: bool = False,
 ) -> bool:
+    """Return True if a date should be excluded."""
     def _is_holiday(_date: date):
 
         return _date in CountryHolidayCalendar()
