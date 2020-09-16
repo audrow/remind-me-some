@@ -26,6 +26,8 @@ jobs:
         pip install .
     - name: Check coding style matches pep8
       run:  flake8 remind_me_some/ tests/
+    - name: Check docstrings with pep257
+      run:  pep257 remind_me_some/
     - name: Run tests
       run: pytest --cov=remind_me_some --cov-report=xml
     - name: Upload test coverage report
