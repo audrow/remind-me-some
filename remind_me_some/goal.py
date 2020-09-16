@@ -1,3 +1,5 @@
+"""The goal class."""
+
 from datetime import datetime, date, timedelta
 import logging
 from typing import Callable, Optional
@@ -10,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 class Goal(Event):
+    """The goal class."""
 
     def __init__(
             self,
@@ -22,6 +25,7 @@ class Goal(Event):
             is_ready_fn: Optional[Callable] = None,
             is_completed_fn: Optional[Callable] = None,
     ) -> None:
+        """Initialize a goal object."""
         super().__init__(
             name=name,
             priority=priority,
@@ -34,6 +38,7 @@ class Goal(Event):
         self._last_completed = last_completed
 
     def make_action(self) -> Action:
+        """Generate a new action instance."""
         logger.debug(f"Make new action for goal '{self.name}'")
         if self._last_completed is not None:
             due = self._last_completed + self._frequency
@@ -51,9 +56,11 @@ class Goal(Event):
         )
 
     def mark_as_completed(self) -> None:
+        """Set the last completed date to today's date."""
         logger.debug(f"Update last completion of goal '{self.name}'")
         self._last_completed = datetime.now().date()
 
     @property
     def last_completed(self) -> date:
+        """Get the date when this goal was last completed."""
         return self._last_completed

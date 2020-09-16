@@ -1,3 +1,5 @@
+"""Schedule actions by their due date and priority."""
+
 from datetime import datetime, date
 from typing import Any, Callable, Optional, List
 
@@ -11,7 +13,7 @@ def schedule_actions(
         is_today_or_after: bool = True,
         is_exclude_date_fn: Optional[Callable] = None,
 ) -> None:
-
+    """Schedule actions by their due date and priority."""
     def _return_false(_: Any):
         return False
 
