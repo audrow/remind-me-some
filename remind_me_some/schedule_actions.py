@@ -10,10 +10,25 @@ def schedule_actions(
         actions,
         max_actions_per_day: int = 1,
         days_to_push_forward: int = 1,
-        is_today_or_after: bool = True,
+        is_schedule_actions_today: bool = True,
         is_exclude_date_fn: Optional[Callable] = None,
 ) -> None:
-    """Schedule actions by their due date and priority."""
+    """Schedule actions by their due date and priority.
+
+    :param actions:
+        Actions to be scheduled. This function modifies this list's order.
+    :param max_actions_per_day:
+        The highest number of actions you would like to have on any given
+        day.
+    :param days_to_push_forward:
+        The number of days to push rescheduled actions forward.
+    :param is_schedule_actions_today:
+        Should actions be scheduled today or not.
+    :param is_exclude_date_fn:
+        A function that should take in a date and return true or false.
+        The date will not have actions on it if this function returns
+        true for it.
+    """
     def _return_false(_: Any):
         return False
 
@@ -38,7 +53,7 @@ def schedule_actions(
     while idx < len(actions):
         action = actions[idx]
 
-        if (is_today_or_after and action.due < datetime.now().date()) \
+        if (is_schedule_actions_today and action.due < datetime.now().date()) \
                 or is_exclude_date_fn(action.due):
             action.push_forward(days_to_push_forward)
             _sort_actions(actions)

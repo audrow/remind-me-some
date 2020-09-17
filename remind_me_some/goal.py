@@ -25,7 +25,35 @@ class Goal(Event):
             is_ready_fn: Optional[Callable] = None,
             is_completed_fn: Optional[Callable] = None,
     ) -> None:
-        """Initialize a goal object."""
+        """Initialize a goal object.
+
+        Goal objects are used to create action objects at some frequency.
+        Most of the information given to the goal object is used to create
+        new action objects.
+
+        :param name:
+            The name of the event.
+        :param frequency:
+            How often this goal should be completed.
+        :param priority:
+            The starting priority an action this goal generates
+            (for determining its relative importance).
+        :param interest_rate:
+            The rate that the priority of a generated action grows each
+            day it is pushed back past its original due date.
+        :param last_completed:
+            The date that this goal was last completed.
+        :param callback:
+            A function to be called when a generated action is run.
+        :param is_ready_fn:
+            A function to determine if a generated action is ready. If
+            nothing is supplied this will default to be on or after the
+            action's due date.
+        :param is_completed_fn:
+            A function to determine if the generated action has been
+            completed. If nothing is supplied, this will default to be
+            true if the callback has been called at least once.
+        """
         super().__init__(
             name=name,
             priority=priority,
@@ -38,7 +66,10 @@ class Goal(Event):
         self._last_completed = last_completed
 
     def make_action(self) -> Action:
-        """Generate a new action instance."""
+        """Generate a new action instance.
+
+        :return: An action object.
+        """
         logger.debug(f"Make new action for goal '{self.name}'")
         if self._last_completed is not None:
             due = self._last_completed + self._frequency
@@ -61,6 +92,11 @@ class Goal(Event):
         self._last_completed = datetime.now().date()
 
     @property
-    def last_completed(self) -> date:
-        """Get the date when this goal was last completed."""
+    def last_completed(self) -> Optional[date]:
+        """Get the date when this goal was last completed.
+
+        :return:
+            The last date that this goal was completed or None, if it
+            hasn't been completed yet.
+        """
         return self._last_completed

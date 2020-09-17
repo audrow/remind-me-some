@@ -14,7 +14,18 @@ def is_exclude_date(
         is_exclude_weekends: bool = True,
         is_exclude_friday: bool = False,
 ) -> bool:
-    """Return True if a date should be excluded."""
+    """Return True if a date should be excluded.
+
+    :param date_:
+        The date to consider.
+    :param is_exclude_holidays:
+        True if you would like to exclude holidays.
+    :param is_exclude_weekends:
+        True if you would like to exclude weekends.
+    :param is_exclude_friday:
+        True if you would like to exclude Fridays.
+    :return:
+    """
     def _is_holiday(_date: date):
 
         return _date in CountryHolidayCalendar()

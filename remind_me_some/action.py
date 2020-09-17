@@ -26,7 +26,7 @@ class Action(Event):
             The planned date for the action to be completed on.
         :param priority:
             The priority of the action (for determining its relative
-            importance.
+            importance).
         :param interest_rate:
             The rate that the priority of the action grows each day it
             is pushed back past its original due date.
@@ -37,7 +37,9 @@ class Action(Event):
             supplied this will default to be on or after the action's due
             date.
         :param is_completed_fn:
-            A function to determine if the action has been completed.
+            A function to determine if the action has been completed. If
+            nothing is supplied, this will default to be true if the
+            callback has been called at least once.
         """
         super().__init__(
             name=name,
