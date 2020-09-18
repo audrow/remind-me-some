@@ -12,7 +12,8 @@ def test_schedule_one_action_per_day():
     a3 = Action("action 2", date(2020, 1, 1), 2.0, 0.05)
     actions_ = [a1, a2, a3]
 
-    schedule_actions(actions_, max_actions_per_day=1, is_schedule_actions_today=False)
+    schedule_actions(
+        actions_, max_actions_per_day=1, is_schedule_actions_today=False)
 
     assert actions_ == [a3, a2, a1]
     assert a3.due == date(2020, 1, 1)
@@ -27,7 +28,8 @@ def test_schedule_two_actions_per_day():
     a3 = Action("action 2", date(2020, 1, 1), 2.0, 0.05)
     actions_ = [a1, a2, a3]
 
-    schedule_actions(actions_, max_actions_per_day=2, is_schedule_actions_today=False)
+    schedule_actions(
+        actions_, max_actions_per_day=2, is_schedule_actions_today=False)
 
     assert actions_ == [a3, a2, a1]
     assert a3.due == date(2020, 1, 1)
