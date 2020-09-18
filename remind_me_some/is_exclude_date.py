@@ -24,7 +24,7 @@ def is_exclude_date(
         True if you would like to exclude weekends.
     :param is_exclude_friday:
         True if you would like to exclude Fridays.
-    :return:
+    :return: True if the date should be excluded; false otherwise.
     """
     def _is_holiday(_date: date):
 
