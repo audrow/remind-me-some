@@ -7,6 +7,9 @@ remind-me-some
 .. image:: https://codecov.io/gh/audrow/remind-me-some/branch/master/graph/badge.svg
    :target: https://codecov.io/gh/audrow/remind-me-some
 
+.. image:: https://badge.fury.io/py/remind-me-some.svg
+   :target: https://badge.fury.io/py/remind-me-some
+
 Schedules some number of items that are due today.
 
 Tasks that you don't get to are weighted to be more heavily in the future.
