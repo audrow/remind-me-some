@@ -21,7 +21,7 @@ def read_file(filename):
 setup(
     name='remind-me-some',
     packages=['remind_me_some'],
-    version='1.0.0',
+    version='1.0.1',
     description='Prioritize your reminders.',
     long_description=read_file('README.rst'),
     license='MIT',

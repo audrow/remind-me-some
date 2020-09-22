@@ -48,6 +48,7 @@ Usage
     for goal in goals:
         goals_.append(Goal(name=goal[0], frequency=goal[1]))
 
+    sm = ScheduleManager()
     sm.add_goals(*goals_)
     sm.update_schedule()
     print(sm)
